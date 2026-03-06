@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Abridge ROI Framework — Why It Matters</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Manrope', sans-serif;
+    background: #F5F0EA;
+    color: #1A1A1A;
+    padding: 40px 36px 56px;
+  }
+  .page { max-width: 1080px; margin: 0 auto; }
+
+  /* ── Hero ─────────────────────────────────────── */
+  .hero {
+    background: #111;
+    border-radius: 16px;
+    padding: 44px 48px 40px;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(234,44,0,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(46,125,50,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 28px;
+  }
+  .hero-brand {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #EA2C00;
+  }
+  .hero-date {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: #555;
+    letter-spacing: 0.06em;
+  }
+  .hero-vision {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 20px;
+  }
+  .vision-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 22px;
+    border-radius: 40px;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+  .vision-pill .icon { font-size: 18px; }
+  .vp-time  { background: rgba(234,44,0,0.15); color: #FF5533; border: 1px solid rgba(234,44,0,0.3); }
+  .vp-money { background: rgba(46,125,50,0.15); color: #4CAF50; border: 1px solid rgba(46,125,50,0.3); }
+  .vp-lives { background: rgba(63,81,181,0.15); color: #7986CB; border: 1px solid rgba(63,81,181,0.3); }
+  .vision-sep {
+    color: #333;
+    font-size: 22px;
+    font-weight: 300;
+    padding: 0 10px;
+    line-height: 1;
+  }
+  .hero-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #666;
+    line-height: 1.6;
+    max-width: 680px;
+  }
+  .hero-title strong { color: #ccc; font-weight: 600; }
+
+  /* ── Pillar connector bar ─────────────────────── */
+  .pillar-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .pillar-card {
+    border-radius: 10px;
+    padding: 16px 18px;
+    border: 1.5px solid;
+  }
+  .pc-time  { background: #FFF5F3; border-color: #FFCCC4; }
+  .pc-money { background: #F3FBF4; border-color: #C3E6CB; }
+  .pc-lives { background: #F3F5FF; border-color: #C5CAE9; }
+  .pc-label {
+    font-size: 9px; font-weight: 800; letter-spacing: 0.18em;
+    text-transform: uppercase; margin-bottom: 5px;
+  }
+  .pc-time  .pc-label { color: #EA2C00; }
+  .pc-money .pc-label { color: #2E7D32; }
+  .pc-lives .pc-label { color: #3949AB; }
+  .pc-text {
+    font-size: 12px; font-weight: 500; line-height: 1.5; color: #444;
+  }
+  .pc-quadrants {
+    display: flex; gap: 5px; margin-top: 10px; flex-wrap: wrap;
+  }
+  .pc-q {
+    font-size: 9.5px; font-weight: 700; padding: 2px 8px;
+    border-radius: 4px; text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .pc-time  .pc-q { background: #FCECEA; color: #EA2C00; }
+  .pc-money .pc-q { background: #E8F5E9; color: #2E7D32; }
+  .pc-lives .pc-q { background: #E8EAF6; color: #3949AB; }
+
+  /* ── Crosswalk strip ──────────────────────────── */
+  .crosswalk {
+    background: #fff;
+    border: 1.5px solid #EAE4DC;
+    border-radius: 12px;
+    padding: 16px 22px 14px;
+    margin-bottom: 14px;
+  }
+  .crosswalk-header {
+    font-size: 8.5px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #C8BEB4;
+    margin-bottom: 12px;
+  }
+  .crosswalk-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .cw-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .cw-from {
+    font-size: 9.5px;
+    font-weight: 700;
+    color: #B0A8A0;
+    text-decoration: line-through;
+    letter-spacing: 0.04em;
+  }
+  .cw-arrow {
+    font-size: 10px;
+    color: #D0C8C0;
+  }
+  .cw-to {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .cw-badge {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .cw-capacity  { background: #FCECEA; color: #EA2C00; }
+  .cw-revenue   { background: #E8F5E9; color: #2E7D32; }
+  .cw-risk      { background: #E8EAF6; color: #3949AB; }
+  .cw-workforce { background: #FEF3C7; color: #B45309; }
+  .cw-note {
+    font-size: 9px;
+    font-weight: 500;
+    color: #B0A8A0;
+    font-style: italic;
+    line-height: 1.4;
+    margin-top: 2px;
+  }
+
+  /* ── Grid ────────────────────────────────────── */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* ── Quadrant card ───────────────────────────── */
+  .quad {
+    background: #fff;
+    border-radius: 14px;
+    border: 1.5px solid #EAE4DC;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .quad-accent { height: 5px; }
+  .q-capacity  .quad-accent { background: #EA2C00; }
+  .q-revenue   .quad-accent { background: #2E7D32; }
+  .q-workforce .quad-accent { background: #B45309; }
+  .q-risk      .quad-accent { background: #3949AB; }
+
+  .quad-inner { padding: 22px 22px 20px; flex: 1; display: flex; flex-direction: column; }
+
+  /* Quadrant header */
+  .quad-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
+  .quad-name-block {}
+  .quad-number { font-size: 9px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #bbb; margin-bottom: 3px; }
+  .quad-name { font-size: 22px; font-weight: 800; color: #111; letter-spacing: -0.02em; }
+  .quad-formerly {
+    font-size: 9px; font-weight: 600; color: #C8C0B8; margin-top: 2px; font-style: italic;
+  }
+  .pillars-stack { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; }
+  .pillar-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 8.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 20px;
+  }
+  .pb-time  { background: #FCECEA; color: #EA2C00; border: 1px solid #FFCCC4; }
+  .pb-money { background: #E8F5E9; color: #2E7D32; border: 1px solid #C3E6CB; }
+  .pb-lives { background: #E8EAF6; color: #3949AB; border: 1px solid #C5CAE9; }
+
+  /* WHY section */
+  .why-statement {
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.65;
+    color: #2A2520;
+    margin-bottom: 16px;
+    flex: 1;
+    border-left: 3px solid;
+    padding-left: 14px;
+  }
+  .q-capacity  .why-statement { border-color: #EA2C00; }
+  .q-revenue   .why-statement { border-color: #2E7D32; }
+  .q-workforce .why-statement { border-color: #B45309; }
+  .q-risk      .why-statement { border-color: #3949AB; }
+
+  .why-statement em {
+    font-style: normal;
+    font-weight: 800;
+  }
+
+  /* Divider */
+  .metrics-divider {
+    height: 1px; background: #F0EAE2; margin-bottom: 12px;
+  }
+
+  /* Metrics */
+  .metrics-label {
+    font-size: 8.5px; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #bbb; margin-bottom: 8px;
+  }
+  .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; }
+  .metric-item {
+    display: flex; align-items: flex-start; gap: 6px;
+    font-size: 11px; font-weight: 600; color: #534D46; line-height: 1.4;
+    padding: 2px 0;
+  }
+  .metric-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    flex-shrink: 0; margin-top: 4px;
+  }
+  .md-ready    { background: #2E7D32; }
+  .md-query    { background: #E65100; }
+  .md-survey   { background: #1565C0; }
+  .md-roadmap  { background: #D0C8C0; }
+  .metric-item.future { color: #C0B8B0; }
+  .metric-item.future .metric-dot { background: #D8D0C8; }
+  .metric-item.primary { color: #1A1A1A; }
+  .metric-item.primary .metric-dot { width: 7px; height: 7px; margin-top: 3px; }
+
+  /* Status row */
+  .status-row {
+    display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap;
+  }
+  .s-pill {
+    font-size: 9px; font-weight: 700; padding: 2px 7px;
+    border-radius: 20px; border: 1px solid transparent;
+  }
+  .sp-ready   { background: #F1FFF1; color: #2E7D32; border-color: #C8E6C9; }
+  .sp-query   { background: #FFF8F1; color: #E65100; border-color: #FFCC80; }
+  .sp-survey  { background: #F1F7FF; color: #1565C0; border-color: #BBDEFB; }
+  .sp-roadmap { background: #F5F5F5; color: #9E9E9E; border-color: #E0E0E0; }
+  .sp-explore { background: #F5F0FF; color: #6A1B9A; border-color: #CE93D8; }
+  .sp-primary { background: #111; color: #fff; border-color: #111; font-size: 8px; }
+
+  /* Legend */
+  .legend {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    padding: 10px 14px;
+    background: #FAF7F4;
+    border: 1px solid #EAE4DC;
+    border-radius: 8px;
+    margin-bottom: 14px;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 9.5px; font-weight: 600; color: #888;
+  }
+  .legend-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+  }
+
+  /* ── Footer ─────────────────────────────────── */
+  .footer {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 18px; padding-top: 14px; border-top: 1px solid #E0D8D0;
+  }
+  .footer-note { font-size: 10px; color: #bbb; font-weight: 500; }
+  .footer-conf { font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #C8BEB4; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── Hero ───────────────────────────────────── -->
+  <div class="hero">
+    <div class="hero-top">
+      <div class="hero-brand">Abridge</div>
+      <div class="hero-date">ROI Framework · March 2026</div>
+    </div>
+    <div class="hero-vision">
+      <div class="vision-pill vp-time"><span class="icon">⏱</span> Save Time</div>
+      <div class="vision-sep">·</div>
+      <div class="vision-pill vp-money"><span class="icon">💰</span> Save Money</div>
+      <div class="vision-sep">·</div>
+      <div class="vision-pill vp-lives"><span class="icon">❤️</span> Save Lives</div>
+    </div>
+    <div class="hero-title">
+      This is Abridge's north star — and it's the organizing principle behind everything we measure.
+      Every ROI metric we track maps back to one of these three outcomes.
+      <strong>This framework is how we make that story repeatable, teachable, and provable at scale.</strong>
+    </div>
+  </div>
+
+  <!-- ── Pillar connector bar ───────────────────── -->
+  <div class="pillar-bar">
+    <div class="pillar-card pc-time">
+      <div class="pc-label">⏱ Save Time</div>
+      <div class="pc-text">Clinicians spend more time on documentation than with patients. We measure the time Abridge gives back — and what they do with it.</div>
+      <div class="pc-quadrants">
+        <span class="pc-q">Capacity</span>
+        <span class="pc-q">Workforce</span>
+      </div>
+    </div>
+    <div class="pillar-card pc-money">
+      <div class="pc-label">💰 Save Money</div>
+      <div class="pc-text">Documentation gaps cost health systems millions in missed codes, denied claims, and avoidable turnover. We quantify what's recoverable.</div>
+      <div class="pc-quadrants">
+        <span class="pc-q">Revenue</span>
+        <span class="pc-q">Workforce</span>
+      </div>
+    </div>
+    <div class="pillar-card pc-lives">
+      <div class="pc-label">❤️ Save Lives</div>
+      <div class="pc-text">Accurate, complete documentation isn't administrative — it's clinical. What isn't captured can't protect a patient. We prove the quality impact.</div>
+      <div class="pc-quadrants">
+        <span class="pc-q">Risk &amp; Quality</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Crosswalk strip ────────────────────────── -->
+  <div class="crosswalk">
+    <div class="crosswalk-header">From the pilot framework → New quadrant mapping</div>
+    <div class="crosswalk-grid">
+
+      <div class="cw-item">
+        <div class="cw-from">Increased Productivity</div>
+        <div class="cw-arrow">↓</div>
+        <div class="cw-to">
+          <span class="cw-badge cw-capacity">Capacity</span>
+        </div>
+        <div class="cw-note">Renamed for clarity — "capacity" connects directly to visits, wait times, and operational throughput</div>
+      </div>
+
+      <div class="cw-item">
+        <div class="cw-from">E&amp;M Integrity</div>
+        <div class="cw-arrow">↓</div>
+        <div class="cw-to">
+          <span class="cw-badge cw-revenue">Revenue</span>
+          <span class="cw-badge cw-risk">Risk &amp; Quality</span>
+        </div>
+        <div class="cw-note">Split into two distinct outcomes — financial recovery and clinical safety are different conversations</div>
+      </div>
+
+      <div class="cw-item">
+        <div class="cw-from">Clinician Experience</div>
+        <div class="cw-arrow">↓</div>
+        <div class="cw-to">
+          <span class="cw-badge cw-workforce">Workforce</span>
+        </div>
+        <div class="cw-note">Elevated to business-level language — retention and cost avoidance resonate with CFOs and COOs</div>
+      </div>
+
+      <div class="cw-item">
+        <div class="cw-from">Patient Experience</div>
+        <div class="cw-arrow">↓</div>
+        <div class="cw-to">
+          <span class="cw-badge cw-risk">Risk &amp; Quality</span>
+        </div>
+        <div class="cw-note">Patient outcomes are the evidence of documentation quality — NPS and trust scores live here as proof of Save Lives</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#2E7D32;"></div>Query ready + validated</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#E65100;"></div>Query available, validating</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#1565C0;"></div>Survey / Abridge-native</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#6A1B9A;"></div>Exploring feasibility</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#D0C8C0;"></div>On roadmap</div>
+    <span style="margin-left:4px; font-size:9.5px; font-weight:700; background:#111; color:#fff; padding:2px 8px; border-radius:20px;">★ Pilot primary KPI</span>
+  </div>
+
+  <!-- ── Quadrant grid ──────────────────────────── -->
+  <div class="grid">
+
+    <!-- CAPACITY -->
+    <div class="quad q-capacity">
+      <div class="quad-accent"></div>
+      <div class="quad-inner">
+        <div class="quad-header">
+          <div class="quad-name-block">
+            <div class="quad-number">Quadrant 1</div>
+            <div class="quad-name">Capacity</div>
+            <div class="quad-formerly">formerly: Increased Productivity</div>
+          </div>
+          <div class="pillars-stack">
+            <div class="pillar-badge pb-time">⏱ Save Time</div>
+          </div>
+        </div>
+        <div class="why-statement">
+          Clinicians didn't become doctors to write notes. Yet documentation consumes <em>2–4 hours per day</em> — time stolen from patients, from thinking, from rest. Abridge measures the time we return, and what happens when clinicians get it back.
+        </div>
+        <div class="status-row">
+          <div class="s-pill sp-ready">● 2 ready</div>
+          <div class="s-pill sp-query">● 3 query available</div>
+          <div class="s-pill sp-roadmap">● 3 roadmap</div>
+          <div class="s-pill sp-primary">★ 2 pilot primary KPIs</div>
+        </div>
+        <div class="metrics-divider"></div>
+        <div class="metrics-label">Key metrics</div>
+        <div class="metrics-grid">
+          <div class="metric-item primary"><div class="metric-dot md-ready"></div>Time to Close Encounter ★</div>
+          <div class="metric-item primary"><div class="metric-dot md-ready"></div>Time in Note per Appt ★</div>
+          <div class="metric-item"><div class="metric-dot md-query"></div>Avg Note Start Rating</div>
+          <div class="metric-item"><div class="metric-dot md-query"></div>Patients Seen / Provider / Mo</div>
+          <div class="metric-item future"><div class="metric-dot"></div>Visits per Clinician Hour</div>
+          <div class="metric-item future"><div class="metric-dot"></div>3rd Next Available</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REVENUE -->
+    <div class="quad q-revenue">
+      <div class="quad-accent"></div>
+      <div class="quad-inner">
+        <div class="quad-header">
+          <div class="quad-name-block">
+            <div class="quad-number">Quadrant 2</div>
+            <div class="quad-name">Revenue</div>
+            <div class="quad-formerly">formerly: E&amp;M Integrity (financial half)</div>
+          </div>
+          <div class="pillars-stack">
+            <div class="pillar-badge pb-money">💰 Save Money</div>
+          </div>
+        </div>
+        <div class="why-statement">
+          Every diagnosis not captured is revenue not collected. Every denied claim is a margin problem. <em>Documentation quality is a financial issue</em> — and health systems are leaving millions on the table because their tools don't make it easy to get it right.
+        </div>
+        <div class="status-row">
+          <div class="s-pill sp-query">● 6 query available</div>
+          <div class="s-pill sp-roadmap">● 6 roadmap</div>
+          <div class="s-pill sp-primary">★ 1 pilot primary KPI</div>
+        </div>
+        <div class="metrics-divider"></div>
+        <div class="metrics-label">Key metrics</div>
+        <div class="metrics-grid">
+          <div class="metric-item primary"><div class="metric-dot md-query"></div>wRVU ★</div>
+          <div class="metric-item"><div class="metric-dot md-query"></div>HCC Capture</div>
+          <div class="metric-item"><div class="metric-dot md-query"></div>CDI Query Volume</div>
+          <div class="metric-item"><div class="metric-dot md-query"></div>Level of Service</div>
+          <div class="metric-item"><div class="metric-dot md-query"></div>Net Collection Rate</div>
+          <div class="metric-item"><div class="metric-dot md-query"></div>Initial Denials</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WORKFORCE -->
+    <div class="quad q-workforce">
+      <div class="quad-accent"></div>
+      <div class="quad-inner">
+        <div class="quad-header">
+          <div class="quad-name-block">
+            <div class="quad-number">Quadrant 3</div>
+            <div class="quad-name">Workforce</div>
+            <div class="quad-formerly">formerly: Clinician Experience</div>
+          </div>
+          <div class="pillars-stack">
+            <div class="pillar-badge pb-time">⏱ Save Time</div>
+            <div class="pillar-badge pb-money">💰 Save Money</div>
+          </div>
+        </div>
+        <div class="why-statement">
+          Burnout is a documentation problem. Physicians who leave over it cost <em>$500K–$1M to replace</em>. The ones who stay are carrying risk. Reducing documentation burden is the highest-leverage workforce intervention a health system can make today.
+        </div>
+        <div class="status-row">
+          <div class="s-pill sp-ready">● 1 ready</div>
+          <div class="s-pill sp-survey">● 4 survey / native</div>
+          <div class="s-pill sp-roadmap">● 4 roadmap</div>
+          <div class="s-pill sp-primary">★ 2 pilot primary KPIs</div>
+        </div>
+        <div class="metrics-divider"></div>
+        <div class="metrics-label">Key metrics</div>
+        <div class="metrics-grid">
+          <div class="metric-item primary"><div class="metric-dot md-survey"></div>Burnout Assessment ★</div>
+          <div class="metric-item primary"><div class="metric-dot md-survey"></div>Work After Hours ★</div>
+          <div class="metric-item"><div class="metric-dot md-ready"></div>Work Outside Work (Empirical)</div>
+          <div class="metric-item"><div class="metric-dot md-survey"></div>Likelihood to Stay (EPS)</div>
+          <div class="metric-item future"><div class="metric-dot"></div>Physician Retention</div>
+          <div class="metric-item future"><div class="metric-dot"></div>Agency / Locum Spend</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RISK / QUALITY -->
+    <div class="quad q-risk">
+      <div class="quad-accent"></div>
+      <div class="quad-inner">
+        <div class="quad-header">
+          <div class="quad-name-block">
+            <div class="quad-number">Quadrant 4</div>
+            <div class="quad-name">Risk &amp; Quality</div>
+            <div class="quad-formerly">formerly: E&amp;M Integrity (quality half) + Patient Experience</div>
+          </div>
+          <div class="pillars-stack">
+            <div class="pillar-badge pb-lives">❤️ Save Lives</div>
+          </div>
+        </div>
+        <div class="why-statement">
+          A note that doesn't capture what happened <em>cannot protect the patient who needed it</em>. Documentation completeness is a clinical safety imperative — and its downstream proof is patient trust, satisfaction, and outcomes. NPS isn't just a sentiment score; it's evidence that better documentation changes the care experience.
+        </div>
+        <div class="status-row">
+          <div class="s-pill sp-ready">● 1 ready</div>
+          <div class="s-pill sp-explore">● 2 exploring</div>
+          <div class="s-pill sp-roadmap">● 12 roadmap</div>
+          <div class="s-pill sp-primary">★ 1 pilot primary KPI</div>
+        </div>
+        <div class="metrics-divider"></div>
+        <div class="metrics-label">Key metrics</div>
+        <div class="metrics-grid">
+          <div class="metric-item primary"><div class="metric-dot md-ready"></div>Diagnosis Capture ★</div>
+          <div class="metric-item"><div class="metric-dot" style="background:#6A1B9A;"></div>Hospital Acquired Conditions</div>
+          <div class="metric-item"><div class="metric-dot" style="background:#6A1B9A;"></div>Nursing Specific HACs</div>
+          <div class="metric-item future"><div class="metric-dot"></div>Patient NPS / Trust (from pilot)</div>
+          <div class="metric-item future"><div class="metric-dot"></div>HEDIS / MIPS / RAF</div>
+          <div class="metric-item future"><div class="metric-dot"></div>Press Ganey / HCAPS</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-note">Abridge · ROI Engine · Vision Framework · March 2026</div>
+    <div class="footer-conf">Confidential</div>
+  </div>
+
+</div>
+</body>
+</html>
